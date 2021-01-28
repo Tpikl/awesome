@@ -12,7 +12,7 @@ local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 
 
 local base_path = "~/.config/awesome/themes/"
-local theme_selection = "zenburn/"
+local theme_selection = "archpad/"
 local themes_path = base_path .. theme_selection
 
 
