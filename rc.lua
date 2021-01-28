@@ -263,19 +263,19 @@ globalkeys = gears.table.join(
         'XF86AudioRaiseVolume',
         volume_widget.raise,
         {description = 'volume up', group = 'hotkeys'}
-      ),
-      awful.key(
+    ),
+    awful.key(
         {},
         'XF86AudioLowerVolume',
         volume_widget.lower,
         {description = 'volume down', group = 'hotkeys'}
-      ),
-      awful.key(
+    ),
+    awful.key(
         {},
         'XF86AudioMute',
         volume_widget.toggle,
         {description = 'toggle mute', group = 'hotkeys'}
-      ),
+    ),
 
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
