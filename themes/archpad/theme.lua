@@ -1,5 +1,5 @@
 -------------------------------
---  "Zenburn" awesome theme  --
+--  "ArchPad" awesome theme  --
 --    By Adrian C. (anrxc)   --
 --  -- Modified By: Pikl --  --
 -------------------------------
