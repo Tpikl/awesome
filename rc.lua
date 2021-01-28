@@ -6,6 +6,7 @@ pcall(require, "luarocks.loader")
 local awesome, client, mouse, screen, tag = awesome, client, mouse, screen, tag
 local ipairs, string, os, table, tostring, tonumber, type = ipairs, string, os, table, tostring, tonumber, type
 
+-- Required widgets
 local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 local volume_widget_widget = volume_widget({display_notification = true, volume_audio_controller = 'alsa_only'})
@@ -32,13 +33,17 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.stacrtup_errors })
+    naughty.notify(
+    {
+        preset = naughty.config.presets.critical,
+        title = "Oops, there were errors during startup!",
+        text = awesome.stacrtup_errors
+    })
 end
 
 -- Handle runtime errors after startup
@@ -49,13 +54,17 @@ do
         if in_error then return end
         in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
+        naughty.notify(
+        {
+            preset = naughty.config.presets.critical,
+            title = "Oops, an error happened!",
+            text = tostring(err)
+        })
         in_error = false
     end)
 end
 -- }}}
+
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
@@ -109,8 +118,11 @@ myawesomemenu = {
 --                                   }
 --                         })
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+mylauncher = awful.widget.launcher(
+{
+    image = beautiful.awesome_icon,
+    menu = mymainmenu
+})
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -125,43 +137,45 @@ mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
-                    awful.button({ modkey }, 1, function(t)
-                                              if client.focus then
-                                                  client.focus:move_to_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, function(t)
-                                              if client.focus then
-                                                  client.focus:toggle_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-                )
+    awful.button({ }, 1, function(t) t:view_only() end),
+    awful.button({ modkey }, 1, function(t)
+                                if client.focus then
+                                    client.focus:move_to_tag(t)
+                                end
+                            end),
+    awful.button({ }, 3, awful.tag.viewtoggle),
+    awful.button({ modkey }, 3, function(t)
+                                if client.focus then
+                                    client.focus:toggle_tag(t)
+                                end
+                            end),
+    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+)
 
 local tasklist_buttons = gears.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  c:emit_signal(
-                                                      "request::activate",
-                                                      "tasklist",
-                                                      {raise = true}
-                                                  )
-                                              end
-                                          end),
-                     awful.button({ }, 3, function()
-                                              awful.menu.client_list({ theme = { width = 250 } })
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                          end))
+    awful.button({ }, 1, function (c)
+                            if c == client.focus then
+                                c.minimized = true
+                            else
+                                c:emit_signal(
+                                    "request::activate",
+                                    "tasklist",
+                                    {raise = true}
+                                )
+                            end
+                        end),
+    awful.button({ }, 3, function()
+                            awful.menu.client_list({ theme = { width = 250 } })
+                        end),
+    awful.button({ }, 4, function ()
+                            awful.client.focus.byidx(1)
+                        end),
+    awful.button({ }, 5, function ()
+                            awful.client.focus.byidx(-1)
+                        end)
+)
+
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -175,6 +189,7 @@ local function set_wallpaper(s)
     end
 end
 
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
@@ -187,14 +202,16 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
+
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+        awful.button({ }, 1, function () awful.layout.inc( 1) end),
+        awful.button({ }, 3, function () awful.layout.inc(-1) end),
+        awful.button({ }, 4, function () awful.layout.inc( 1) end),
+        awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
@@ -221,21 +238,12 @@ awful.screen.connect_for_each_screen(function(s)
             s.mytaglist,
             s.mypromptbox,
         },
+
         s.mytasklist, -- Middle widget
+
         { -- Right widgets
         layout = wibox.layout.fixed.horizontal,
-            -- volumearc_widget({
-            --     main_color = '#af13f7',
-            --     mute_color = '#ff0000',
-            --     thickness = 5,
-            --     height = 25,
-            --     button_press = function(_, _, _, button)   -- Overwrites the button press behaviour to open pavucontrol when clicked
-            --         if (button == 1) then awful.spawn('pavucontrol --tab=3', false)
-            --         end
-            --     end
-            -- }),
             volume_widget_widget,
-            -- mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -247,6 +255,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 end)
 -- }}}
+
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
@@ -420,6 +429,7 @@ clientkeys = gears.table.join(
         end ,
         {description = "(un)maximize horizontally", group = "client"})
 )
+
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
