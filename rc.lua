@@ -10,7 +10,6 @@ local ipairs, string, os, table, tostring, tonumber, type = ipairs, string, os, 
 local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 local volume_widget_widget = volume_widget({display_notification = true, volume_audio_controller = 'alsa_only'})
-local volumearc_widget = require("awesome-wm-widgets.volumearc-widget.volumearc")
 
 
 -- Standard awesome library
@@ -134,9 +133,6 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
-
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
@@ -247,12 +243,12 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.fixed.horizontal,
             volume_widget_widget,
             wibox.widget.systray(),
-            mytextclock,
-            s.mylayoutbox,
             batteryarc_widget({
                 show_current_level = true,
                 arc_thickness = 2,
-            })
+            }),
+            s.mylayoutbox,
+            wibox.widget.textclock(),
         },
     }
 end)
@@ -269,20 +265,22 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-    awful.key(
-        {},
+    awful.key({ altkey, "Control" },
+        "l",
+        function () os.execute("slock") end,
+        {description = "lock screen", group = "hotkeys"}
+    ),
+    awful.key({},
         'XF86AudioRaiseVolume',
         volume_widget.raise,
         {description = 'volume up', group = 'hotkeys'}
     ),
-    awful.key(
-        {},
+    awful.key({},
         'XF86AudioLowerVolume',
         volume_widget.lower,
         {description = 'volume down', group = 'hotkeys'}
     ),
-    awful.key(
-        {},
+    awful.key({},
         'XF86AudioMute',
         volume_widget.toggle,
         {description = 'toggle mute', group = 'hotkeys'}
