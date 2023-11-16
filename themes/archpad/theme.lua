@@ -8,7 +8,7 @@ local gears = require("gears")
 
 
 local dpi = require("beautiful.xresources").apply_dpi
-local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+--local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 
 
 local base_path = "~/.config/awesome/themes/archpad/"
@@ -16,7 +16,7 @@ local base_path = "~/.config/awesome/themes/archpad/"
 
 -- {{{ Main
 local theme = {}
-theme.wallpaper = base_path .. "wallhaven-eymzjk.jpg"
+--theme.wallpaper = base_path .. "wallhaven-eymzjk.jpg"
 -- }}}
 
 -- {{{ Styles
