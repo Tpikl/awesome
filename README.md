@@ -1,5 +1,10 @@
-# awesome
-> awesome wm config.
+# ~/.config/awesome
+Personal awesomeWM config.
 
-Requires [awesome-wm-widgets](https://github.com/streetturtle/awesome-wm-widgets) cloned within this folder.  
-Currently set up for a laptop. Might require some adjustments.
+
+## Requires
+- [awesome-wm-widgets](https://github.com/streetturtle/awesome-wm-widgets)
+    - Cloned within this folder.
+
+## Using
+- [awesome 4.3-3](https://archlinux.org/packages/extra/x86_64/awesome/)

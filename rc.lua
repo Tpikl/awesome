@@ -7,9 +7,9 @@ local awesome, client, mouse, screen, tag = awesome, client, mouse, screen, tag
 local ipairs, string, os, table, tostring, tonumber, type = ipairs, string, os, table, tostring, tonumber, type
 
 -- Required widgets
-local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+--local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
-local volume_widget_widget = volume_widget({display_notification = true, volume_audio_controller = 'alsa_only'})
+local volume_widget_widget = volume_widget({display_notification = true, volume_audio_controller = 'alsa_only', widget_type = 'arc'})
 
 
 -- Standard awesome library
@@ -70,7 +70,7 @@ end
 beautiful.init("~/.config/awesome/themes/archpad/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "termite"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -114,8 +114,12 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({
     items = {
+        { terminal, terminal },
+        { "thunar", "thunar" },
+        { "firefox", "firefox" },
+        { "vs code", "code" },
+        { "pavu", "pavucontrol" },
         { "awesome", myawesomemenu, beautiful.awesome_icon },
-        { "open terminal", terminal }
     }
 })
 
@@ -232,7 +236,7 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            --mylauncher,
             s.mytaglist,
             s.mypromptbox,
         },
@@ -243,10 +247,10 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.fixed.horizontal,
             volume_widget_widget,
             wibox.widget.systray(),
-            batteryarc_widget({
-                show_current_level = true,
-                arc_thickness = 2,
-            }),
+--            batteryarc_widget({
+--                show_current_level = true,
+--                arc_thickness = 2,
+--            }),
             s.mylayoutbox,
             wibox.widget.textclock(),
         },
@@ -265,26 +269,11 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-    awful.key({ altkey, "Control" },
-        "l",
-        function () os.execute("slock") end,
-        {description = "lock screen", group = "hotkeys"}
-    ),
-    awful.key({},
-        'XF86AudioRaiseVolume',
-        volume_widget.raise,
-        {description = 'volume up', group = 'hotkeys'}
-    ),
-    awful.key({},
-        'XF86AudioLowerVolume',
-        volume_widget.lower,
-        {description = 'volume down', group = 'hotkeys'}
-    ),
-    awful.key({},
-        'XF86AudioMute',
-        volume_widget.toggle,
-        {description = 'toggle mute', group = 'hotkeys'}
-    ),
+   awful.key({ modkey, "Control" },
+       "l",
+       function () os.execute("slock") end,
+       {description = "lock screen", group = "hotkeys"}
+   ),
 
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -427,7 +416,13 @@ clientkeys = gears.table.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end ,
-        {description = "(un)maximize horizontally", group = "client"})
+        {description = "(un)maximize horizontally", group = "client"}),
+
+    awful.key({}, "Print",
+        function ()
+            awful.util.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'", false)
+        end
+    )
 )
 
 
@@ -628,3 +623,6 @@ client.connect_signal("manage", function(c)
         gears.shape.rounded_rect(cr, w, h, 3)
     end
 end)
+
+-- feh wallpaper restore
+awful.spawn.with_shell("~/.fehbg &")
