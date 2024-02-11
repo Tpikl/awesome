@@ -13,6 +13,8 @@ local dpi = require("beautiful.xresources").apply_dpi
 
 local base_path = "~/.config/awesome/themes/archpad/"
 
+local focus  = "#5F5F5F"
+local normal = "#1F1F1F"
 
 -- {{{ Main
 local theme = {}
@@ -26,8 +28,8 @@ theme.font      = "Hack 8"
 theme.fg_normal  = "#DCDCCC"
 theme.fg_focus   = "#F0DFAF"
 theme.fg_urgent  = "#CC9393"
-theme.bg_normal  = "#3F3F3F"
-theme.bg_focus   = "#1E2320"
+theme.bg_normal  = normal
+theme.bg_focus   = focus
 theme.bg_urgent  = "#3F3F3F"
 theme.bg_systray = theme.bg_normal
 -- }}}
@@ -41,8 +43,8 @@ theme.border_marked = "#CC9393"
 -- }}}
 
 -- {{{ Titlebars
-theme.titlebar_bg_focus  = "#3F3F3F"
-theme.titlebar_bg_normal = "#3F3F3F"
+theme.titlebar_bg_focus  = focus
+theme.titlebar_bg_normal = normal
 -- }}}
 
 -- There are other variable sets
