@@ -299,6 +299,7 @@ globalkeys = gears.table.join(
        {description = "lock screen", group = "hotkeys"}
    ),
 
+    -- Volume
     awful.key({}, 'XF86AudioRaiseVolume',
         function() volume_widget:inc(2) end,
         {description = 'volume up',group = 'hotkeys'}
@@ -310,6 +311,24 @@ globalkeys = gears.table.join(
     awful.key({}, 'XF86AudioMute',
         function() volume_widget:toggle() end,
         {description = 'toggle mute', group = 'hotkeys'}
+    ),
+
+    -- Media Controls
+    awful.key({}, 'XF86AudioPlay',
+        function() awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") end,
+        {description = 'play', group = 'hotkeys'}
+    ),
+    awful.key({}, 'XF86AudioNext',
+        function() awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") end,
+        {description = 'next song', group = 'hotkeys'}
+    ),
+    awful.key({}, 'XF86AudioPrev',
+        function() awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") end,
+        {description = 'previous song', group = 'hotkeys'}
+    ),
+    awful.key({}, 'XF86AudioStop',
+        function() awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop") end,
+        {description = 'stop', group = 'hotkeys'}
     ),
 
 
