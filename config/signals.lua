@@ -64,3 +64,44 @@ client.connect_signal("manage", function(c)
         gears.shape.rounded_rect(cr, w, h, 3)
     end
 end)
+
+-- Mouse wrapping across monitor edges (toggle via vars.mouse_wrap)
+local vars = require("config.vars")
+local mouse_wrap_timer = gears.timer({ timeout = 1/60 })
+mouse_wrap_timer:connect_signal("timeout", function()
+    local min_x, min_y = math.huge, math.huge
+    local max_x, max_y = -math.huge, -math.huge
+    for s in screen do
+        local g = s.geometry
+        min_x = math.min(min_x, g.x)
+        min_y = math.min(min_y, g.y)
+        max_x = math.max(max_x, g.x + g.width)
+        max_y = math.max(max_y, g.y + g.height)
+    end
+
+    local pos = mouse.coords()
+    local new_pos = nil
+
+    if pos.x <= min_x then
+        new_pos = { x = max_x - 2, y = pos.y }
+    elseif pos.x >= max_x - 1 then
+        new_pos = { x = min_x + 1, y = pos.y }
+    end
+
+    if pos.y <= min_y then
+        new_pos = new_pos or { x = pos.x, y = nil }
+        new_pos.y = max_y - 2
+        new_pos.x = new_pos.x or pos.x
+    elseif pos.y >= max_y - 1 then
+        new_pos = new_pos or { x = pos.x, y = nil }
+        new_pos.y = min_y + 1
+        new_pos.x = new_pos.x or pos.x
+    end
+
+    if new_pos then
+        mouse.coords(new_pos)
+    end
+end)
+if vars.mouse_wrap then
+    mouse_wrap_timer:start()
+end
