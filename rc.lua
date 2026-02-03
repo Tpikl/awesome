@@ -65,6 +65,7 @@ end
 -- }}}
 
 
+--naughty.layout.box.maximum_height = 50
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/themes/archpad/theme.lua")
@@ -106,20 +107,29 @@ awful.layout.layouts = {
 -- Create a launcher for apps
 myappsmenu = {
     { "firefox", "firefox" },
-    { "vscode", "code" },
-    { "[discord]", "discord" },
-    { "[steam]", "steam" },
+    { "discord", "discord" },
+}
+
+mymusicmenu = {
+    { "spotify", "spotify" },
 }
 
 mygamesmenu = {
-    { "BAR", "beyondallreason" },
-    { "GBA", "mgba-qt" },
-    { "SNES", "snes9x-gtk" }
+    { "[ steam ]", "steam" },
+    { "[ lutris ]", "lutris" },
+    { "Minecraft", "minecraft-launcher" },
+    -- { "BAR", "beyondallreason" },
+    -- { "GBA", "mgba-qt" },
+    -- { "SNES", "snes9x-gtk" }
+}
+
+mytoolsmenu = {
+    { "vscode", "code" },
 }
 
 -- Create a launcher for system
 mysystemmenu = {
-    { "explorer", "thunar" },
+    { "explorer", "dolphin" },
     { "sound", "pavucontrol" },
 }
 
@@ -136,7 +146,9 @@ mymainmenu = awful.menu({
     items = {
         { terminal, terminal },
         { "apps", myappsmenu },
+        { "music", mymusicmenu },
         { "games", mygamesmenu },
+        { "tools", mytoolsmenu },
         { "system", mysystemmenu },
         { "awesome", myawesomemenu, beautiful.awesome_icon },
         { "power", {
@@ -276,7 +288,7 @@ local tasklist_buttons = gears.table.join(
  --                arc_thickness = 2,
  --            }),
              s.mylayoutbox,
-             wibox.widget.textclock(),
+             wibox.widget.textclock('%a %b %d, %H:%M:%S', 1),
          },
      }
  end)
@@ -377,10 +389,13 @@ globalkeys = gears.table.join(
     --     {description = "go back", group = "client"}),
 
     -- Standard program
-    awful.key({ modkey,           }, "e", function () awful.spawn("thunar") end,
+    awful.key({ modkey,           }, "e", function () awful.spawn("dolphin") end,
               {description = "open explorer", group = "launcher"}),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey}, "r", function() awful.spawn.with_shell("rofi -show drun") end,
+              {...}),
+--    awful.key({"Alt"}, "Tab", function() awful.spawn.with_shell("rofi -show window") end, {...}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -477,9 +492,9 @@ clientkeys = gears.table.join(
         end ,
         {description = "(un)maximize horizontally", group = "client"}),
 
-    awful.key({}, "Print",
+    awful.key({modkey, "Shift"}, "s",
         function ()
-            awful.util.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'", false)
+            awful.spawn.with_shell("maim -s | xclip -selection clipboard -t image/png")
         end
     )
 )
