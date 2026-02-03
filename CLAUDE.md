@@ -42,3 +42,7 @@ themes/
 - **Media:** Spotify via dbus/playerctl
 - **Screenshot:** maim
 - **Screen lock:** i3lock
+
+## Testing
+
+- **Notifications:** `notify-send -i /path/to/large/image.png "Title" "Body text"` to test size constraints with images and long text.

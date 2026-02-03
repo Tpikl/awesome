@@ -43,6 +43,11 @@ theme.mouse_finder_color = "#CC9393"
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
+-- Notifications
+theme.notification_max_width  = dpi(400)
+theme.notification_max_height = dpi(150)
+theme.notification_icon_size  = dpi(64)
+
 -- Tasklist
 theme.tasklist_min_width = dpi(350)
 theme.tasklist_max_width = dpi(400)
