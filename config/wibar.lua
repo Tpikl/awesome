@@ -1,6 +1,7 @@
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
+local beautiful = require("beautiful")
 local vars = require("config.vars")
 
 local volume_control = require("awesome-wm-widgets.volume-widget.volume")
@@ -75,6 +76,36 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         filter = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
+        source = function()
+            -- Sort by X11 window ID for stable order (oldest windows on the left)
+            local cls = s.clients
+            table.sort(cls, function(a, b) return a.window < b.window end)
+            return cls
+        end,
+        layout = {
+            max_widget_size = beautiful.tasklist_max_width,
+            layout = wibox.layout.flex.horizontal,
+        },
+        widget_template = {
+            {
+                {
+                    {
+                        id = "icon_role",
+                        widget = wibox.widget.imagebox,
+                    },
+                    {
+                        id = "text_role",
+                        widget = wibox.widget.textbox,
+                    },
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                left = 6,
+                right = 6,
+                widget = wibox.container.margin,
+            },
+            id = "background_role",
+            widget = wibox.container.background,
+        },
     })
 
     s.mywibox = awful.wibar({ position = "top", screen = s })

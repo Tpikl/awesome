@@ -43,6 +43,10 @@ theme.mouse_finder_color = "#CC9393"
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
+-- Tasklist
+theme.tasklist_min_width = dpi(350)
+theme.tasklist_max_width = dpi(400)
+
 -- Taglist icons
 theme.taglist_squares_sel   = base_path .. "taglist/squarefz.png"
 theme.taglist_squares_unsel = base_path .. "taglist/squarez.png"
