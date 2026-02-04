@@ -78,7 +78,7 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons,
         source = function()
             -- Sort by X11 window ID for stable order (oldest windows on the left)
-            local cls = s.clients
+            local cls = s.all_clients
             table.sort(cls, function(a, b) return a.window < b.window end)
             return cls
         end,
