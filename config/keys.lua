@@ -5,6 +5,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local vars = require("config.vars")
 local menu = require("config.menu")
 local wibar = require("config.wibar")
+local tasklist_order = require("utils.tasklist_order")
 
 local keys = {}
 local modkey = vars.modkey
@@ -54,10 +55,10 @@ keys.globalkeys = gears.table.join(
 
     -- Client focus
     awful.key({ modkey }, "Tab",
-        function() awful.client.focus.byidx(1) end,
+        function() awful.client.focus.byidx(-1) end,
         { description = "focus next by index", group = "tab" }),
     awful.key({ modkey, "Shift" }, "Tab",
-        function() awful.client.focus.byidx(-1) end,
+        function() awful.client.focus.byidx(1) end,
         { description = "focus previous by index", group = "tab" }),
     awful.key({ modkey, "Control" }, "Tab",
         function() awful.screen.focus_relative(1) end,
@@ -65,13 +66,21 @@ keys.globalkeys = gears.table.join(
     awful.key({ modkey }, "u", awful.client.urgent.jumpto,
         { description = "jump to urgent client", group = "client" }),
 
-    -- Client swapping
+    -- Client swapping (tiling layout order)
     awful.key({ modkey, "Shift" }, "j",
         function() awful.client.swap.byidx(1) end,
         { description = "swap with next client by index", group = "client" }),
     awful.key({ modkey, "Shift" }, "k",
         function() awful.client.swap.byidx(-1) end,
         { description = "swap with previous client by index", group = "client" }),
+
+    -- Tasklist reorder
+    awful.key({ modkey, "Shift" }, "Left",
+        tasklist_order.swap_focused_backward,
+        { description = "move focused client left in tasklist", group = "client" }),
+    awful.key({ modkey, "Shift" }, "Right",
+        tasklist_order.swap_focused_forward,
+        { description = "move focused client right in tasklist", group = "client" }),
 
     -- Layout
     awful.key({ modkey }, "l",

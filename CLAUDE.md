@@ -14,13 +14,15 @@ config/
   rules.lua             Window rules
   signals.lua           Client/screen signals
   wibar.lua             Status bar & widgets
+utils/
+  tasklist_order.lua    Custom tasklist ordering & reorder-by-keybinding
 themes/
   archpad/              Default theme (dark palette, Hack font, PNG assets)
 ```
 
 ## Scope
 
-- Edit `rc.lua` and files under `config/` and `themes/`.
+- Edit `rc.lua` and files under `config/`, `utils/`, and `themes/`.
 - Do **not** modify anything inside `awesome-wm-widgets/` or other third-party directories.
 
 ## Themes

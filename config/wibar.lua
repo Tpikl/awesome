@@ -3,6 +3,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local vars = require("config.vars")
+local tasklist_order = require("utils.tasklist_order")
 
 local volume_control = require("awesome-wm-widgets.volume-widget.volume")
 
@@ -77,34 +78,56 @@ awful.screen.connect_for_each_screen(function(s)
         filter = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
         source = function()
-            -- Sort by X11 window ID for stable order (oldest windows on the left)
-            local cls = s.all_clients
-            table.sort(cls, function(a, b) return a.window < b.window end)
-            return cls
+            return tasklist_order.source(s)
         end,
         layout = {
             max_widget_size = beautiful.tasklist_max_width,
+            spacing = beautiful.tasklist_item_spacing or 0,
             layout = wibox.layout.flex.horizontal,
         },
         widget_template = {
             {
                 {
                     {
-                        id = "icon_role",
-                        widget = wibox.widget.imagebox,
+                        {
+                            id = "icon_role",
+                            widget = wibox.widget.imagebox,
+                        },
+                        {
+                            id = "text_role",
+                            widget = wibox.widget.textbox,
+                        },
+                        layout = wibox.layout.fixed.horizontal,
                     },
-                    {
-                        id = "text_role",
-                        widget = wibox.widget.textbox,
-                    },
-                    layout = wibox.layout.fixed.horizontal,
+                    left = 6,
+                    right = 6,
+                    widget = wibox.container.margin,
                 },
-                left = 6,
-                right = 6,
-                widget = wibox.container.margin,
+                widget = wibox.container.background,
             },
-            id = "background_role",
+            id = "border_role",
             widget = wibox.container.background,
+            shape = gears.shape.rectangle,
+            shape_border_width = beautiful.tasklist_item_border_width or 1,
+            shape_border_color = beautiful.tasklist_item_border_color or "#3F3F3F",
+            create_callback = function(self, c)
+                local border_focus = beautiful.tasklist_item_border_color_focus or "#FFFFFF"
+                local border_normal = beautiful.tasklist_item_border_color or "#3F3F3F"
+                if c == client.focus then
+                    self.shape_border_color = border_focus
+                else
+                    self.shape_border_color = border_normal
+                end
+            end,
+            update_callback = function(self, c)
+                local border_focus = beautiful.tasklist_item_border_color_focus or "#FFFFFF"
+                local border_normal = beautiful.tasklist_item_border_color or "#3F3F3F"
+                if c == client.focus then
+                    self.shape_border_color = border_focus
+                else
+                    self.shape_border_color = border_normal
+                end
+            end,
         },
     })
 

@@ -51,6 +51,10 @@ theme.notification_icon_size  = dpi(64)
 -- Tasklist
 theme.tasklist_min_width = dpi(350)
 theme.tasklist_max_width = dpi(400)
+theme.tasklist_item_border_width = dpi(1)
+theme.tasklist_item_border_color = "#3F3F3F"
+theme.tasklist_item_border_color_focus = "#FFFFFF"
+theme.tasklist_item_spacing = dpi(8)
 
 -- Taglist icons
 theme.taglist_squares_sel   = base_path .. "taglist/squarefz.png"
