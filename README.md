@@ -28,3 +28,6 @@ Current default: **archpad**.
 
 - [awesome 4.3](https://archlinux.org/packages/extra/x86_64/awesome/)
 - [awesome-wm-widgets](https://github.com/streetturtle/awesome-wm-widgets) — cloned into this directory (git-ignored)
+- [playerctl](https://archlinux.org/packages/extra/x86_64/playerctl/) — media key control
+- [maim](https://archlinux.org/packages/extra/x86_64/maim/) — screenshot tool
+- [xclip](https://archlinux.org/packages/extra/x86_64/xclip/) — clipboard for screenshots

@@ -25,16 +25,16 @@ keys.globalkeys = gears.table.join(
 
     -- Media controls
     awful.key({}, "XF86AudioPlay",
-        function() awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") end,
+        function() awful.util.spawn("playerctl play-pause") end,
         { description = "play/pause", group = "hotkeys" }),
     awful.key({}, "XF86AudioNext",
-        function() awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") end,
+        function() awful.util.spawn("playerctl next") end,
         { description = "next song", group = "hotkeys" }),
     awful.key({}, "XF86AudioPrev",
-        function() awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") end,
+        function() awful.util.spawn("playerctl previous") end,
         { description = "previous song", group = "hotkeys" }),
     awful.key({}, "XF86AudioStop",
-        function() awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop") end,
+        function() awful.util.spawn("playerctl stop") end,
         { description = "stop", group = "hotkeys" }),
 
     -- Awesome
